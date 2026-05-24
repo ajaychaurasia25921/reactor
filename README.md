@@ -21,7 +21,7 @@
 1. Backend
 ```bash
 cd backend
-mvn quarkus:dev
+gradle quarkusDev
 ```
 2. Frontend
 ```bash
@@ -30,15 +30,13 @@ npm install
 npm run dev
 ```
 
-## Example Fault API Request
+## Example Machine Provisioning Request
 ```bash
-curl -X POST http://localhost:8080/api/v1/events/fault \
+curl -X POST http://localhost:8080/api/v1/machines \
   -H "Content-Type: application/json" \
   -d '{
-    "source":"leaf-01",
-    "severity":"CRITICAL",
-    "cpuUsage":96.4,
-    "observedAt":"2026-05-24T09:15:22Z",
-    "payloadJson":"{\"interface\":\"eth1/2\",\"drops\":140}"
+    "name":"quantum-simulation-node-01",
+    "type":"quantum",
+    "resources":{"cpuCores":64,"memoryGb":256}
   }'
 ```

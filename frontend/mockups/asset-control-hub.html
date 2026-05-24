@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Asset Control Hub</title>
+  </head>
+  <body class="min-h-screen bg-[#05070b] text-slate-100">
+    <main class="mx-auto max-w-7xl space-y-4 p-4">
+      <h1 class="text-xl font-semibold text-cyan-300">Asset Control Hub</h1>
+      <section class="grid grid-cols-2 gap-4">
+        <form class="space-y-3 rounded-xl border border-slate-700 bg-[#0b1220] p-4">
+          <h2 class="text-sm font-semibold">POST /machines</h2>
+          <input class="w-full rounded bg-slate-900 p-2 text-sm" placeholder="name" />
+          <select class="w-full rounded bg-slate-900 p-2 text-sm"><option>classical</option><option>quantum</option><option>ai_optimized</option></select>
+          <div class="grid grid-cols-2 gap-2">
+            <input class="rounded bg-slate-900 p-2 text-sm" placeholder="cpuCores" />
+            <input class="rounded bg-slate-900 p-2 text-sm" placeholder="memoryGb" />
+          </div>
+          <button class="rounded border border-cyan-500 px-3 py-2 text-sm">Schedule Provisioning</button>
+        </form>
+        <form class="space-y-3 rounded-xl border border-slate-700 bg-[#0b1220] p-4">
+          <h2 class="text-sm font-semibold">PATCH /machines/{machineId}/hardware</h2>
+          <input class="w-full rounded bg-slate-900 p-2 text-sm" placeholder="machineId" />
+          <input class="w-full rounded bg-slate-900 p-2 text-sm" placeholder="targetRamGb" />
+          <input class="w-full rounded bg-slate-900 p-2 text-sm" placeholder="scaleStorageBytes" />
+          <select class="w-full rounded bg-slate-900 p-2 text-sm"><option>NVIDIA_H100</option><option>AMD_MI300X</option><option>NONE</option></select>
+          <button class="rounded border border-amber-500 px-3 py-2 text-sm">Queue Hardware Update</button>
+        </form>
+      </section>
+      <section class="rounded-xl border border-slate-700 bg-[#0b1220] p-4">
+        <h2 class="mb-2 text-sm font-semibold">Deployment Status Tracker</h2>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <div class="rounded bg-slate-900 p-2">job-a81d enqueued</div>
+          <div class="rounded bg-slate-900 p-2">job-c019 processing</div>
+          <div class="rounded bg-slate-900 p-2">job-77a1 finalized</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+plugins {
+  id 'java'
+  id 'io.quarkus'
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+dependencies {
+  implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+  implementation 'io.quarkus:quarkus-rest'
+  implementation 'io.quarkus:quarkus-rest-jackson'
+  implementation 'io.quarkus:quarkus-reactive-pg-client'
+  implementation 'io.quarkus:quarkus-smallrye-openapi'
+  implementation 'io.quarkus:quarkus-smallrye-graphql'
+  implementation 'io.quarkus:quarkus-arc'
+
+  testImplementation 'io.quarkus:quarkus-junit5'
+  testImplementation 'io.rest-assured:rest-assured'
+}
+
+group = 'com.reactor'
+version = '2.1.0'
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+tasks.withType(Test).configureEach {
+  useJUnitPlatform()
+}
