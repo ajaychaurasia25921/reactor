@@ -16,7 +16,7 @@ dependencies {
   implementation 'io.quarkus:quarkus-smallrye-openapi'
   implementation 'io.quarkus:quarkus-smallrye-graphql'
   implementation 'io.quarkus:quarkus-arc'
-  implementation 'org.graalvm.sdk:graal-sdk:24.1.2'
+  implementation 'org.graalvm.polyglot:polyglot:24.1.2'
 
   testImplementation 'io.quarkus:quarkus-junit5'
   testImplementation 'io.rest-assured:rest-assured'
