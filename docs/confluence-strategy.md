@@ -1,46 +1,39 @@
-# Confluence - Fabric Engine Next-Gen Strategy
+# Confluence PRD - Fabric Engine Next-Gen v2
 
-## Mission
-Deliver an autonomous network control plane that shifts operations from reactive ticket handling to continuous AI-assisted remediation.
+## Product Summary
+Fabric Engine Next-Gen is a unified control plane for enterprise infrastructure orchestration spanning compute, virtualization, transport, and security automation.
 
-## Strategic KPIs
-- Cold start performance: `< 50ms` native startup for Quarkus services.
-- Runtime footprint: `< 100MB` memory envelope for core services.
-- Tier-1 remediation automation: `>= 60%` of repeatable incidents auto-resolved.
-- Payload efficiency: `>= 40%` reduction via GraphQL shape-selective responses.
+## Problem
+NetOps and CloudOps teams operate fragmented systems with slow remediation, inconsistent APIs, and high operational toil.
 
-## KPI Instrumentation
-- Startup KPI source: CI native smoke test + runtime boot probe.
-- Footprint KPI source: container-level memory telemetry sampled every 5s.
-- Automation KPI source: ratio of auto-closed Tier-1 incidents to total Tier-1 incidents.
-- Payload KPI source: comparative sampling between GraphQL response size and baseline REST schema.
+## Core Capability Scope
+- Compute Provisioning
+- Compute Scaling
+- Enterprise Provisioning
+- Systems Hardware
+- Security Plane (firewall + honeypots)
 
-## KPI Formulae
-- `AutomationRate = AutoResolvedTier1 / TotalTier1`
-- `PayloadReduction = 1 - (MeanGraphQLPayload / MeanRestPayload)`
-- `ColdStartCompliance = count(T_startup <= 50ms) / count(total_deploys)`
+## Functional Requirements
+- Provision machine resources through asynchronous contracts.
+- Patch compute hardware dimensions without service interruption.
+- Manage enterprise server inventory with mutable runtime configuration.
+- Register and monitor physical hardware health vectors.
+- Author and apply runtime firewall policy rules and incident telemetry views.
 
-## Execution Strategy
-1. Platform Function Factory
-2. Native-first service profile
-3. Unified eventing + orchestration state model
-4. Closed-loop observability and remediation
+## NFR Targets
+- >=60% autonomous remediation of Tier-1 anomalies.
+- >=40% frontend payload reduction via GraphQL-structured responses.
+- GraalVM script isolation with strict no-filesystem/no-network execution.
+- Quarkus native cold start under 50ms.
+- Runtime footprint under 100MB for core services.
 
-## Platform Function Factory
-Each function is an independently deployable, native-compiled unit with:
-- strict input schema
-- deterministic side effects
-- gRPC contract for composition
-- policy-bound execution context
+## Architecture Notes
+- Client ingress: GraphQL queries/subscriptions.
+- Control ingress: OpenAPI REST for command operations.
+- Internal service fabric: gRPC-based communication for throughput scaling.
 
-## Quarterly Outcomes (Engineering)
-- Q1: baseline ingestion + topology streaming with GraphQL subscriptions
-- Q2: AI remediation state machine with manual approval gates
-- Q3: autonomous Tier-1 remediation with SMPP escalation
-- Q4: adaptive policy tuning with incident pattern feedback
-
-## Risk Controls
-- Isolation hardening for dynamic script execution
-- Circuit breakers around SMPP and model inference calls
-- Backpressure and bounded queueing on event bursts
+## Success Metrics
+- MTTR reduction by 35% in pilot network domains.
+- False-positive remediation rate below 3%.
+- 99.9% job orchestration API availability.
 
