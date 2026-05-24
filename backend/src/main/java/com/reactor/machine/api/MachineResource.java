@@ -1,6 +1,5 @@
 package com.reactor.machine.api;
 
-import com.reactor.machine.domain.AsyncJobResponse;
 import com.reactor.machine.domain.HardwareUpdateRequest;
 import com.reactor.machine.domain.MachineProvisionRequest;
 import com.reactor.machine.service.MachineOrchestrationService;
@@ -33,9 +32,4 @@ public class MachineResource {
             .map(job -> Response.accepted(job).build());
     }
 
-    @GET
-    @Path("/jobs/{jobId}")
-    public Uni<AsyncJobResponse> getJobStatus(@PathParam("jobId") String jobId) {
-        return orchestrationService.getJobStatus(jobId);
-    }
 }

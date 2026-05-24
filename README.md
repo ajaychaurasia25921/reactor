@@ -16,6 +16,7 @@
 - Static contract file: `backend/src/main/resources/openapi.yaml`
 - Runtime OpenAPI endpoint: `http://localhost:8080/q/openapi`
 - Swagger UI: `http://localhost:8080/q/swagger-ui`
+- Async status endpoint implementation: `GET /api/v1/operations/tasks/{jobId}`
 
 ## Local Run
 1. Backend
@@ -38,5 +39,18 @@ curl -X POST http://localhost:8080/api/v1/machines \
     "name":"quantum-simulation-node-01",
     "type":"quantum",
     "resources":{"cpuCores":64,"memoryGb":256}
+  }'
+```
+
+## Example Hardware Patch Request
+```bash
+curl -X PATCH http://localhost:8080/api/v1/machines/2d95f1fc-342a-4ba9-a3ad-7dece6c013b1/hardware \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetRamGb":1024,
+    "scaleStorageBytes":2199023255552,
+    "acceleratorClass":"NVIDIA_H100",
+    "microcodeVersions":["mcode-2.1.9"],
+    "coprocessorArrays":["fpga-x1"]
   }'
 ```

@@ -47,4 +47,22 @@ class MachineResourceTest {
             .statusCode(202)
             .body("jobId", not(blankOrNullString()));
     }
+
+    @Test
+    void shouldRejectInvalidMachinePayload() {
+        given()
+            .contentType("application/json")
+            .body("""
+                {
+                  "name": "",
+                  "type": "quantum",
+                  "resources": {"cpuCores": 0, "memoryGb": 0}
+                }
+                """)
+        .when()
+            .post("/api/v1/machines")
+        .then()
+            .statusCode(400)
+            .body("code", equalTo("REQUEST_ERROR"));
+    }
 }

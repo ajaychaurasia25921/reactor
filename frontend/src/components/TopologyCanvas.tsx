@@ -11,6 +11,9 @@ import 'reactflow/dist/style.css';
 import { gql, useSubscription } from '@apollo/client';
 import { useTopologyStore } from '../store/store';
 import type { TopologyDeltaPayload, TopologyEdge, TopologyNode } from '../types/topology';
+import { MachineProvisionForm } from './MachineProvisionForm';
+import { HardwareUpdateForm } from './HardwareUpdateForm';
+import { useMachineStore } from '../store/machineStore';
 
 const TOPOLOGY_DELTA_SUBSCRIPTION = gql`
   subscription TopologyDeltaStream {
@@ -50,6 +53,8 @@ const initialEdges: TopologyEdge[] = [
 
 export function TopologyCanvas(): JSX.Element {
   const { nodes, edges, remediationLogs, setInitial, applyDelta, appendLog } = useTopologyStore();
+  const jobs = useMachineStore((s) => s.jobs);
+  const infraLogs = useMachineStore((s) => s.infraLogs);
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState(nodes);
   const [rfEdges, setRfEdges, onEdgesChange] = useEdgesState(edges);
 
@@ -103,11 +108,28 @@ export function TopologyCanvas(): JSX.Element {
             <Controls />
           </ReactFlow>
         </section>
-        <aside className="col-span-3 rounded-xl border border-slate-700 bg-slate-900 p-3">
+        <aside className="col-span-3 space-y-2 rounded-xl border border-slate-700 bg-slate-900 p-3">
+          <MachineProvisionForm />
+          <HardwareUpdateForm />
+          <div className="rounded border border-slate-700 bg-slate-800 p-2 text-xs">
+            <h2 className="mb-2 font-semibold text-cyan-300">Async Jobs</h2>
+            <div className="space-y-1">
+              {jobs.slice(0, 6).map((job) => (
+                <p key={job.jobId} className="rounded bg-slate-900 p-1">
+                  {job.jobId.slice(0, 8)}... {job.status}
+                </p>
+              ))}
+            </div>
+          </div>
           <h2 className="mb-3 text-sm font-semibold tracking-wide text-cyan-300">AI Remediation Log</h2>
           <div className="max-h-[92vh] space-y-2 overflow-y-auto text-xs">
             {remediationLogs.map((log, idx) => (
               <p key={`${log}-${idx}`} className="rounded border border-slate-700 bg-slate-800 p-2">
+                {log}
+              </p>
+            ))}
+            {infraLogs.map((log, idx) => (
+              <p key={`infra-${log}-${idx}`} className="rounded border border-slate-700 bg-slate-900 p-2 text-cyan-200">
                 {log}
               </p>
             ))}
