@@ -38,19 +38,31 @@ export function MachineProvisionForm(): JSX.Element {
   }
 
   return (
-    <div className="space-y-2 rounded-xl border border-slate-700 bg-slate-900 p-3 text-xs">
-      <h3 className="font-semibold text-cyan-300">Machine Provisioning</h3>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="name" className="w-full rounded bg-slate-800 p-2" />
-      <select value={type} onChange={(e) => setType(e.target.value as MachineProvisionRequest['type'])} className="w-full rounded bg-slate-800 p-2">
-        <option value="classical">classical</option>
-        <option value="quantum">quantum</option>
-        <option value="ai_optimized">ai_optimized</option>
-      </select>
-      <div className="grid grid-cols-2 gap-2">
-        <input value={cpuCores} onChange={(e) => setCpuCores(e.target.value)} placeholder="cpuCores" className="rounded bg-slate-800 p-2" />
-        <input value={memoryGb} onChange={(e) => setMemoryGb(e.target.value)} placeholder="memoryGb" className="rounded bg-slate-800 p-2" />
+    <div className="space-y-3 rounded-xl border border-slate-700 bg-slate-900 p-3 text-xs">
+      <h3 className="font-semibold tracking-wide text-cyan-300">Asset Control Hub · Provision Machine</h3>
+      <div className="space-y-1">
+        <label className="text-slate-300">Machine Name</label>
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="quantum-simulation-node-01" className="w-full rounded border border-slate-700 bg-slate-800 p-2" />
       </div>
-      <button onClick={submit} className="rounded border border-cyan-500 px-3 py-2">Queue Provisioning</button>
+      <div className="space-y-1">
+        <label className="text-slate-300">Provisioning Type</label>
+        <select value={type} onChange={(e) => setType(e.target.value as MachineProvisionRequest['type'])} className="w-full rounded border border-slate-700 bg-slate-800 p-2">
+          <option value="classical">classical</option>
+          <option value="quantum">quantum</option>
+          <option value="ai_optimized">ai_optimized</option>
+        </select>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-1">
+          <label className="text-slate-300">CPU Cores</label>
+          <input value={cpuCores} onChange={(e) => setCpuCores(e.target.value)} placeholder="64" className="w-full rounded border border-slate-700 bg-slate-800 p-2" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-slate-300">Memory (GB)</label>
+          <input value={memoryGb} onChange={(e) => setMemoryGb(e.target.value)} placeholder="256" className="w-full rounded border border-slate-700 bg-slate-800 p-2" />
+        </div>
+      </div>
+      <button onClick={submit} className="w-full rounded border border-cyan-500 bg-cyan-500/10 px-3 py-2 font-medium text-cyan-300">Queue Provisioning</button>
     </div>
   );
 }
