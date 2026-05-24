@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Fabric Engine Next-Gen Execution Plane API
+  version: 1.0.0
+  description: >-
+    REST API for event fault ingestion and remediation execution results.
+servers:
+  - url: http://localhost:8080
+    description: Local development
+paths:
+  /api/v1/events/fault:
+    post:
+      operationId: ingestFaultEvent
+      summary: Ingest a network fault event and trigger the remediation pipeline
+      tags: [EventIngestion]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultEvent'
+      responses:
+        '200':
+          description: Remediation execution result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionResult'
+        '400':
+          description: Invalid input payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal execution pipeline error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    FaultEvent:
+      type: object
+      required: [source, severity, cpuUsage, observedAt, payloadJson]
+      properties:
+        source:
+          type: string
+          example: leaf-01
+        severity:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+          example: CRITICAL
+        cpuUsage:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 96.4
+        observedAt:
+          type: string
+          format: date-time
+          example: '2026-05-24T09:15:22Z'
+        payloadJson:
+          type: string
+          description: Serialized JSON telemetry payload
+          example: '{"interface":"eth1/2","drops":140,"temp":77}'
+    ExecutionResult:
+      type: object
+      required: [success, output, error, durationMillis]
+      properties:
+        success:
+          type: boolean
+          example: true
+        output:
+          type: string
+          example: '{action=scale_out, units=2, reason=cpu_critical}'
+        error:
+          type: string
+          example: ''
+        durationMillis:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 44
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          example: source is required
+        traceId:
+          type: string
+          example: f4431f28ce8a4261
