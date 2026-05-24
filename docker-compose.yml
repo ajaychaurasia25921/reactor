@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: reactor-postgres
+    environment:
+      POSTGRES_DB: reactor
+      POSTGRES_USER: reactor
+      POSTGRES_PASSWORD: reactor
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reactor -d reactor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: reactor-backend:develop
+    container_name: reactor-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      QUARKUS_PROFILE: prod
+      QUARKUS_HTTP_PORT: 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  pg_data:

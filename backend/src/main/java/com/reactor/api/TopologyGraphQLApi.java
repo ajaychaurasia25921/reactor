@@ -3,7 +3,9 @@ package com.reactor.api;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.graphql.*;
+import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Query;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,7 +23,7 @@ public class TopologyGraphQLApi {
         ));
     }
 
-    @Subscription
+    @Query
     @Description("Realtime remediation and topology updates")
     public Multi<TopologyDelta> topologyDeltaStream() {
         return Multi.createFrom().ticks().every(java.time.Duration.ofMillis(500))
